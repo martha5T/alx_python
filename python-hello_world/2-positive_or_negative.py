@@ -4,7 +4,7 @@ number = random.randint(-10, 10)
 # YOUR CODE HERE
 if number > 0:
     print(number, 'is positive')
-elif number < 0:
+else if number < 0:
     print(number, 'is negative')
-else:
+else if = 0
     print(number, 'is zero')
