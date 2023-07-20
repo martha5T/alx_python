@@ -1,5 +1,3 @@
-#!/usr/bin/env
-def add(a, b):
-    a = 3
-    b = 6
-    print(a + b)
+#!/usr/bin/env python3
+def add(a,b):
+    return a+b
