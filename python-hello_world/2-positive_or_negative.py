@@ -7,5 +7,5 @@ if number > 0:
 else:
     if number < 0:
         print(number, 'is negative')
-elseif: number = 0
-print(number, 'is zero')
+    else: 
+        print(number, 'is zero')
