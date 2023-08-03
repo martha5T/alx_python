@@ -62,3 +62,12 @@ width and height must be private. No getter or setter
 width and height must be positive integers validated by integer_validator
 the area() method must be implemented
 print() should print, and str() should return, the following rectangle description: [Rectangle] <width>/<height>
+
+8. Square #1
+
+Write a class Square that inherits from Rectangle (7-rectangle.py):
+
+Instantiation with size: def __init__(self, size)::
+size must be private. No getter or setter
+size must be a positive integer, validated by integer_validator
+the area() method must be implemented
