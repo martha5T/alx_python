@@ -1,2 +1,5 @@
 def raise_exception():
-    raise TypeError()
+    try:
+        raise TypeError("Exception has been raised")
+    except TypeError as e:
+        print(e)
