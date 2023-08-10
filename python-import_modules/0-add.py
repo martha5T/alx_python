@@ -7,7 +7,6 @@ def main():
     b = 2
 
     result = add(a, b)
-
     print("{} + {} = {}".format(a, b, result))
 
 # Check if the script is being run directly
