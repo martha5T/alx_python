@@ -1,73 +1,59 @@
-#!/usr/bin/python3
 """
-This function inherits the basic properties of a polygon from the
-rectangle class to the square class.
+This module defines the Square class.
+
+The Square class inherits from the Rectangle class.
+It has one private attribute: size.
+
+The Square class has an area() method that calculates its area.
 """
 
 
-class BaseGeometry:
-    """
-    This class represents a base geometry.
-    """
+class DefinitionOverrideMetaClass(type):
+    """def __new__(cls, name, bases, attrs):
+        # Customize the class creation process here
+        return super().__new__(cls, name, bases, attrs)"""
 
-    def area(self):
+    def __dir__(cls):
         """
-        Calculates the area.
-
-        Raises:
-            Exception: with the message "area() is not implemented"
-        """
-        raise Exception("area() is not implemented")
-
-    def integer_validator(self, name, value):
-        """
-        Validates the integer value.
-
-        Args:
-            name (str): The name of the value.
-            value: The value to be validated.
-
-        Raises:
-            TypeError: If value is not an integer.
-            ValueError: If value is less than or equal to 0.
-        """
-        if not isinstance(value, int):
-            raise TypeError(f"{name} must be an integer")
-        if value <= 0:
-            raise ValueError(f"{name} must be greater than 0")
-
-
-class Rectangle(BaseGeometry):
-    """
-    This class represents a rectangle.
-    """
-
-    def __init__(self, width, height):
-        """
-        Initializes a rectangle object with width and height.
-
-        Args:
-            width (int): The width of the rectangle.
-            height (int): The height of the rectangle.
-
-        Raises:
-            TypeError: If width or height is not an integer.
-            ValueError: If width or height is less than or equal to 0.
-        """
-        self.integer_validator("width", width)
-        self.integer_validator("height", height)
-        self.__width = width
-        self.__height = height
-
-    def __str__(self):
-        """
-        Returns the rectangle description.
-
         Returns:
-            str: The rectangle description in the format "[Rectangle]
-            <width>/<height>"
+            list: List of attributes excluding __init_subclass__.
         """
-        return f"[Rectangle] {self.__width}/{self.__height}"
+        return [attribute for attribute in
+                super().__dir__() if attribute != '__init_subclass__']
+
+Rectangle = __import__('7-rectangle').Rectangle
+
+
+class Square(Rectangle):
+    """
+    This class defines a rectangle.
+
+    Attributes:
+        _width (int): The width of the rectangle.
+        _height (int): The height of the rectangle.
+
+    Methods:
+        area(): Calculates the area of the rectangle.
+
+    Raises:
+        AttributeError: If the attribute width or height is accessed.
+        TypeError: If the value of size width or height is not an integer.
+        ValueError: If the value of size is less than or equal to 0.
+    """
+
+    def __init__(self, size):
+        """
+        Initializes a new square.
+
+        Args:
+            size (int): The size of the square
+
+        Raises:
+            TypeError: If the value of size is not an integer.
+            ValueError: If the value of size is less than or equal to 0.
+        """
+        self.integer_validator("size", size)
+        self._size = size
 
     def area(self):
         """
@@ -76,24 +62,21 @@ class Rectangle(BaseGeometry):
         Returns:
             int: The area of the rectangle.
         """
-        return self.__width * self.__height
+        return self._size * self._size
 
-
-class Square(Rectangle):
-    """
-    This class represents a square.
-    """
-
-    def __init__(self, size):
+    def __str__(self):
         """
-        Initializes a square object with size.
+        Returns the square description.
 
-        Args:
-            size (int): The size of the square.
-
-        Raises:
-            TypeError: If size is not an integer.
-            ValueError: If size is less than or equal to 0.
+        Returns:
+            str: The description in the format [Rectangle] <width>/<height>.
         """
-        self.integer_validator("size", size)
-        super().__init__(size, size)
+        return "[Rectangle] {}/{}".format(self._size, self._size)
+
+    def __dir__(cls):
+        """
+        Returns:
+            list: List of attributes excluding __init_subclass__.
+        """
+        return [attribute for attribute in
+                super().__dir__() if attribute != '__init_subclass__']
