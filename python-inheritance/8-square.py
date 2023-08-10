@@ -79,4 +79,4 @@ class Square(Rectangle):
             list: List of attributes excluding __init_subclass__.
         """
         return [attribute for attribute in
-                super().__dir__() if attribute != '__init_subclass__']
+            super().__dir__() if attribute != '__init_subclass__']
