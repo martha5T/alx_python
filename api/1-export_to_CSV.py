@@ -1,7 +1,8 @@
 import requests
+import csv
 import sys
 
-def get_employee_todo_progress(employee_id):
+def export_employee_todo_to_csv(employee_id):
     # Construct the URL for the employee details
     employee_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     
@@ -15,7 +16,8 @@ def get_employee_todo_progress(employee_id):
 
     # Parse the JSON response to obtain employee data
     employee_data = employee_response.json()
-    employee_name = employee_data['name']
+    user_id = employee_data['id']
+    username = employee_data['username']
 
     # Construct the URL for the employee's TODO list
     todos_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
@@ -31,21 +33,24 @@ def get_employee_todo_progress(employee_id):
     # Parse the JSON response to obtain the TODO list data
     todos_data = todos_response.json()
 
-    # Calculate the number of completed and total tasks
-    total_tasks = len(todos_data)
-    completed_tasks = sum(1 for todo in todos_data if todo['completed'])
+    # Create a CSV file for the employee's TODO list
+    csv_filename = f"{user_id}.csv"
+    with open(csv_filename, 'w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        
+        # Write the CSV header
+        csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
 
-    # Print the employee's TODO list progress in the specified format
-    print(f"Employee {employee_name} is done with tasks ({completed_tasks}/{total_tasks}):")
-    
-    # Print the titles of completed tasks
-    for todo in todos_data:
-        if todo['completed']:
-            print(f"\t{todo['title']}")
+        # Write the TODO list data to the CSV file
+        for todo in todos_data:
+            task_completed_status = "Completed" if todo['completed'] else "Not Completed"
+            csv_writer.writerow([user_id, username, task_completed_status, todo['title']])
+
+    print(f"CSV file '{csv_filename}' has been created with TODO list data.")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python script_name.py <employee_id>")
     else:
         employee_id = int(sys.argv[1])
-        get_employee_todo_progress(employee_id)
+        export_employee_todo_to_csv(employee_id)
