@@ -8,7 +8,6 @@ def main():
 
     result = add(a, b)
     print("{} + {} = {}".format(a, b, result))
-
 # Check if the script is being run directly
 if __name__ == "__main__":
     main()
